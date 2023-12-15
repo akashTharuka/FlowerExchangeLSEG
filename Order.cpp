@@ -12,6 +12,5 @@ Order::Order(const std::string& client_order_id, const std::string& instrument, 
 
 Order::~Order()
 {
-	std::cout << "Destructor called" << std::endl;
 	// Cleanup or resource release code here
 }

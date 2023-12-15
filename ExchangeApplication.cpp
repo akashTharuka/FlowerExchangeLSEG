@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "Utils.h"
+#include "Validator.h"
 
 int ExchangeApplication::order_id_counter = 0;
 
@@ -17,7 +18,6 @@ ExchangeApplication::ExchangeApplication()
 
 ExchangeApplication::~ExchangeApplication()
 {
-	std::cout << "ExchangeApplication destructor called" << std::endl;
 }
 
 std::string ExchangeApplication::generateUniqueOrderId()
@@ -53,9 +53,13 @@ void ExchangeApplication::processOrdersCsvFile(std::string file_path)
 		std::string client_order_id = tokens[0];
 		std::string instrument = tokens[1];
 		std::string side_str = tokens[2];
-		int side = side_str == "Buy" ? Side::BUY : Side::SELL;
+		// int side = side_str == "Buy" ? Side::BUY : Side::SELL;
 		int quantity = std::stoi(tokens[3]);
 		double price = std::stod(tokens[4]);
+
+		std::cout << Validator::isValidSide(side_str) << std::endl;
+
+		// FlowerExchangeUtils::printVector(tokens);
 
 		// Order order(client_order_id, instrument, side, quantity, price);
 

@@ -16,6 +16,5 @@ ExecutionReport::ExecutionReport(std::string client_order_id, std::string instru
 
 ExecutionReport::~ExecutionReport()
 {
-	std::cout << "Destructor called" << std::endl;
 	// Cleanup or resource release code here
 }

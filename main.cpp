@@ -1,4 +1,6 @@
 #include "ExchangeApplication.h"
+#include "Validator.h"
+#include <iostream>
 
 int main()
 {

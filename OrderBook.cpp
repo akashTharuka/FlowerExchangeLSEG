@@ -10,7 +10,6 @@ OrderBook::OrderBook(const std::string& instrument)
 
 OrderBook::~OrderBook()
 {
-	std::cout << "OrderBook destructor called" << std::endl;
 }
 
 void OrderBook::addBuyOrder(Order order)
