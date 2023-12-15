@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClCompile Include="ExchangeApplication.cpp" />
     <ClCompile Include="ExecutionReport.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="OrderBook.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
@@ -140,6 +142,10 @@
     <ClInclude Include="Order.h" />
     <ClInclude Include="OrderBook.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Validator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FlowerExchangeLSEG.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

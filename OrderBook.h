@@ -13,7 +13,8 @@ class OrderBook
 		The order book receives an order. (Side = Sell, Price = 55.00, Qty = 100)
 		This order will go inside sell side of the order book, and an execution report with status “New” will be disseminated
 		*/
-		OrderBook(const std::string& instrument, std::vector<Order> buy_orders, std::vector<Order> sell_orders);
+		OrderBook() {};
+		OrderBook(const std::string& instrument);
 		~OrderBook();
 
 		// Getters
