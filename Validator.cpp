@@ -2,34 +2,59 @@
 #include <regex>
 #include "Enums.h"
 
-namespace Validator
+bool Validator::isValidClientOrderId(const std::string& client_order_id)
 {
-	bool isValidClientOrderId(const std::string& client_order_id)
+	// only alphanumeric char with min 1 max 7
+	std::string client_order_id_pattern = "^[a-zA-Z0-9]{1,7}$";
+	return std::regex_match(client_order_id, std::regex(client_order_id_pattern));
+}
+
+bool Validator::isValidInstrument(const std::string& instrument)
+{
+	// should only include { Rose, Lavender, Lotus, Tulip, Orchid }
+	std::string instrument_pattern = "^(Rose|Lavender|Lotus|Tulip|Orchid)$";
+	return std::regex_match(instrument, std::regex(instrument_pattern));
+}
+
+bool Validator::isValidSide(int side)
+{
+	// should only include { Buy, Sell }
+	return side == Side::BUY + 1 || side == Side::SELL + 1;
+}
+
+bool Validator::isValidPrice(double price)
+{
+	// should be a positive double
+	return price > 0;
+}
+
+bool Validator::isValidQuantity(int quantity)
+{
+	// should be a positive integer multiple of 10, min 10 max 1000
+	return quantity % 10 == 0 && quantity >= 10 && quantity <= 1000;
+}
+
+std::string Validator::validate(const std::string& client_order_id, const std::string& instrument, int side, double price, int quantity)
+{
+	if (!isValidClientOrderId(client_order_id))
 	{
-		// only alphanumeric char with min 1 max 7
-		std::string client_order_id_pattern = "^[a-zA-Z0-9]{1,7}$";
-		return std::regex_match(client_order_id, std::regex(client_order_id_pattern));
+		return "Invalid client order id: " + client_order_id;
 	}
-	bool isValidInstrument(const std::string& instrument)
+	if (!isValidInstrument(instrument))
 	{
-		// should only include { Rose, Lavender, Lotus, Tulip, Orchid }
-		std::string instrument_pattern = "^(Rose|Lavender|Lotus|Tulip|Orchid)$";
-		return std::regex_match(instrument, std::regex(instrument_pattern));
+		return "Invalid instrument: " + instrument;
 	}
-	bool isValidSide(const std::string& side_string)
+	if (!isValidSide(side))
 	{
-		// should only include { Buy, Sell }
-		std::string side_string_pattern = "^(Buy|Sell)$";
-		return std::regex_match(side_string, std::regex(side_string_pattern));
+		return "Invalid side: " + std::to_string(side);
 	}
-	bool isValidPrice(double price)
+	if (!isValidPrice(price))
 	{
-		// should be a positive double
-		return price > 0;
+		return "Invalid price: " + std::to_string(price);
 	}
-	bool isValidQuantity(int quantity)
+	if (!isValidQuantity(quantity))
 	{
-		// should be a positive integer multiple of 10, min 10 max 1000
-		return quantity % 10 == 0 && quantity >= 10 && quantity <= 1000;
+		return "Invalid quantity: " + std::to_string(quantity);
 	}
+	return "";
 }
