@@ -27,5 +27,38 @@ std::string ExchangeApplication::generateUniqueOrderId()
 
 void ExchangeApplication::processOrdersCsvFile(std::string file_path)
 {
-	
+	std::ifstream file(file_path);
+	if (!file.is_open())
+	{
+		std::cout << "Error opening file: " << file_path << std::endl;
+		return;
+	}
+	std::string line;
+	std::getline(file, line); // skip header line
+	while (std::getline(file, line))
+	{
+		std::stringstream iss(line);
+		std::string token;
+		// CSV format: client_order_id, instrument, side, quantity, price
+		std::vector<std::string> tokens;
+		while (std::getline(iss, token, ','))
+		{
+			tokens.push_back(token);
+		}
+		if (tokens.size() != 5)
+		{
+			std::cout << "Error parsing line: " << line << std::endl;
+			continue;
+		}
+		std::string client_order_id = tokens[0];
+		std::string instrument = tokens[1];
+		std::string side_str = tokens[2];
+		int side = side_str == "Buy" ? Side::BUY : Side::SELL;
+		int quantity = std::stoi(tokens[3]);
+		double price = std::stod(tokens[4]);
+
+		// Order order(client_order_id, instrument, side, quantity, price);
+
+	}
+	file.close();
 }
