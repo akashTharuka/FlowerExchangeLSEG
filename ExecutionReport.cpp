@@ -1,10 +1,10 @@
 #include "ExecutionReport.h"
 #include <iostream>
 
-ExecutionReport::ExecutionReport(std::string client_order_id, std::string instrument, int side, double price, int quantity, int status, std::string reason, std::string transaction_time)
+ExecutionReport::ExecutionReport(const std::string client_order_id, std::string order_id, const std::string instrument, int side, double price, int quantity, int status, std::string transaction_time, std::string reason)
 {
 	this->client_order_id = client_order_id;
-	//this->order_id = ;
+	this->order_id = order_id;
 	this->instrument = instrument;
 	this->side = side;
 	this->price = price;

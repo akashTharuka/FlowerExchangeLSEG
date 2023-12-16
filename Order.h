@@ -5,6 +5,7 @@
 class Order
 {
 	public:
+		static int priority;
 		// parameters
 		// client_order_id: This unique ID identifies the submitted order
 		// instrument: { Rose, Lavender, Lotus, Tulip, Orchid }
