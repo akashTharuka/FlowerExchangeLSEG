@@ -2,6 +2,11 @@
 #include <string>
 #include <vector>
 #include "Order.h"
+#include <map>
+#include "ExecutionReport.h"
+
+typedef std::map< double, std::vector<Order> > vector_map;
+typedef std::map< double, std::vector<Order>, std::greater<int> > vector_map_desc;
 
 class OrderBook
 {
@@ -17,18 +22,13 @@ class OrderBook
 		OrderBook(const std::string& instrument);
 		~OrderBook();
 
-		// Getters
-		std::string getInstrument() const { return instrument; }
-		std::vector<Order> getBuyOrders() const { return buy_orders; }
-		std::vector<Order> getSellOrders() const { return sell_orders; }
-
 		// methods
-		void addBuyOrder(Order order);
-		void addSellOrder(Order order);
+		void addBuyOrder(Order order, const std::string& order_id);
+		void addSellOrder(Order order, const std::string& order_id);
 	private:
 		std::string instrument;
-		std::vector<Order> buy_orders;
-		std::vector<Order> sell_orders;
-
+		// buy orders are sorted in descending order
+		vector_map_desc buy_orders;
+		vector_map sell_orders;
 };
 

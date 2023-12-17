@@ -1,11 +1,9 @@
 #pragma once
 #include <string>
-#include "Enums.h"
 
 class Order
 {
 	public:
-		static int priority;
 		// parameters
 		// client_order_id: This unique ID identifies the submitted order
 		// instrument: { Rose, Lavender, Lotus, Tulip, Orchid }
@@ -21,6 +19,9 @@ class Order
 		int getSide() const { return side; }
 		double getPrice() const { return price; }
 		int getQuantity() const { return quantity; }
+
+		// Setters
+		void setQuantity(int quantity) { this->quantity = quantity; }
 
 	private:
 		std::string client_order_id;

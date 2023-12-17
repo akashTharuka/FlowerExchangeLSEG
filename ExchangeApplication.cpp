@@ -6,7 +6,7 @@
 #include "Validator.h"
 #include "Enums.h"
 
-int ExchangeApplication::order_id_counter = 0;
+std::vector<ExecutionReport> ExchangeApplication::execution_reports;
 
 ExchangeApplication::ExchangeApplication()
 {
@@ -23,6 +23,7 @@ ExchangeApplication::~ExchangeApplication()
 
 std::string ExchangeApplication::generateUniqueOrderId()
 {
+	static int order_id_counter = 0;
 	return "Order_" + std::to_string(++order_id_counter);
 }
 
@@ -71,35 +72,21 @@ void ExchangeApplication::processOrdersCsvFile(std::string file_path)
 			continue;
 		}
 		Order order(client_order_id, instrument, side, price, quantity);
-		OrderBook order_book;
-		if (instrument == "Rose")
-		{
-			order_book = order_books[InstrumentType::Rose];
-		}
-		else if (instrument == "Lavender")
-		{
-			order_book = order_books[InstrumentType::Lavender];
-		}
-		else if (instrument == "Lotus")
-		{
-			order_book = order_books[InstrumentType::Lotus];
-		}
-		else if (instrument == "Tulip")
-		{
-			order_book = order_books[InstrumentType::Tulip];
-		}
-		else if (instrument == "Orchid")
-		{
-			order_book = order_books[InstrumentType::Orchid];
-		}
+		OrderBook& order_book = (instrument == "Rose") ? order_books[InstrumentType::Rose] :
+			(instrument == "Lavender") ? order_books[InstrumentType::Lavender] :
+			(instrument == "Lotus") ? order_books[InstrumentType::Lotus] :
+			(instrument == "Tulip") ? order_books[InstrumentType::Tulip] :
+			order_books[InstrumentType::Orchid];
 
 		if (side == 1)
 		{
-			order_book.addBuyOrder(order);
+			order_book.addBuyOrder(order, generateUniqueOrderId());
+			std::cout << "Buy order added: " << line << std::endl;
 		}
 		else if (side == 2)
 		{
-			order_book.addSellOrder(order);
+			order_book.addSellOrder(order, generateUniqueOrderId());
+			std::cout << "Sell order added: " << line << std::endl;
 		}
 
 	}
@@ -119,14 +106,32 @@ void ExchangeApplication::writeToCsvFile(std::vector<ExecutionReport> execution_
 	// Write header
 	file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price\n";
 
+	std::cout << execution_reports.size() << std::endl;
+
 	// Write orders
 	for (const auto& exec_rep : execution_reports) 
 	{
+		std::string status;
+		switch (exec_rep.getStatus())
+		{
+			case 0:
+				status = "New";
+				break;
+			case 1:
+				status = "Rejected";
+				break;
+			case 2:
+				status = "Fill";
+				break;
+			case 3:
+				status = "Pfill";
+				break;
+		}
 		file << exec_rep.getOrderId() << ","
 			<< exec_rep.getClientOrderId() << ","
 			<< exec_rep.getInstrument() << ","
 			<< exec_rep.getSide() << ","
-			<< exec_rep.getStatus() << ","
+			<< status << ","
 			<< exec_rep.getQuantity() << ","
 			<< exec_rep.getPrice() << "\n";
 	}
@@ -137,5 +142,5 @@ void ExchangeApplication::writeToCsvFile(std::vector<ExecutionReport> execution_
 
 void ExchangeApplication::addExecutionReport(ExecutionReport execution_report)
 {
-	this->execution_reports.push_back(execution_report);
+	execution_reports.push_back(execution_report);
 }

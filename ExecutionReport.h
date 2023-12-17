@@ -10,6 +10,7 @@ class ExecutionReport
 		// status : { 0: New, 1: Rejected, 2: Fill, 3: Pfill }
 		// reason : { Invalid Instrument, Invalid Side, Invalid Price, Invalid Quantity, Invalid Client Order ID, Invalid Transaction Time, Invalid Status }
 		// transaction_time : YYYYMMDD-HH:MM:SS.sss
+		ExecutionReport() {};
 		ExecutionReport(const std::string client_order_id, std::string order_id, const std::string instrument, int side, double price, int quantity, int status, std::string transaction_time, std::string reason = "");
 		~ExecutionReport();
 
