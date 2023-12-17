@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ExecutionReport.h"
 #include "ExchangeApplication.h"
+#include "Utils.h"
 
 OrderBook::OrderBook(const std::string& instrument)
 {
@@ -25,7 +26,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 			buy_order.getPrice(),
 			buy_order.getQuantity(),
 			ExecutionStatus::New,
-			"transaction_time",
+			FlowerExchangeUtils::getTransactionTime(),
 			""
 		};
 		ExchangeApplication::addExecutionReport(exec_rep);
@@ -50,7 +51,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
 				ExecutionStatus::Pfill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -64,7 +65,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -83,7 +84,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				buy_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -98,7 +99,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
 				ExecutionStatus::Pfill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -117,7 +118,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				buy_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -132,7 +133,7 @@ void OrderBook::addBuyOrder(Order buy_order)
 				curr_sell_order.getPrice(),
 				buy_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -175,7 +176,7 @@ void OrderBook::addSellOrder(Order sell_order)
 			sell_order.getPrice(),
 			sell_order.getQuantity(),
 			ExecutionStatus::New,
-			"transaction_time",
+			FlowerExchangeUtils::getTransactionTime(),
 			""
 		};
 		ExchangeApplication::addExecutionReport(exec_rep);
@@ -200,7 +201,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				curr_buy_order.getQuantity(),
 				ExecutionStatus::Pfill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -214,7 +215,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				curr_buy_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -231,7 +232,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				sell_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -246,7 +247,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				curr_buy_order.getQuantity(),
 				ExecutionStatus::Pfill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -263,7 +264,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				sell_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);
@@ -278,7 +279,7 @@ void OrderBook::addSellOrder(Order sell_order)
 				curr_buy_order.getPrice(),
 				sell_order.getQuantity(),
 				ExecutionStatus::Fill,
-				"transaction_time",
+				FlowerExchangeUtils::getTransactionTime(),
 				""
 			};
 			ExchangeApplication::addExecutionReport(exec_rep);

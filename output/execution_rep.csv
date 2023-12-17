@@ -1,9 +1,9 @@
 Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Transaction TIme,Reason
-ord1,aa13,Rose,1,New,100,55,,transaction_time
-ord2,aa14,Rose,1,New,100,65,,transaction_time
-ord3,aa15,Rose,2,PFill,100,65,,transaction_time
-ord2,aa14,Rose,1,Fill,100,65,,transaction_time
-ord3,aa15,Rose,2,PFill,100,55,,transaction_time
-ord1,aa13,Rose,1,Fill,100,55,,transaction_time
-ord4,aa16,Rose,1,Fill,100,1,,transaction_time
-ord3,aa15,Rose,2,Fill,100,1,,transaction_time
+ord1,aa13,Rose,1,New,100,55,20231217-20:24:55.000,
+ord2,aa14,Rose,1,New,100,65,20231217-20:24:55.000,
+ord3,aa15,Rose,2,PFill,100,65,20231217-20:24:55.000,
+ord2,aa14,Rose,1,Fill,100,65,20231217-20:24:55.000,
+ord3,aa15,Rose,2,PFill,100,55,20231217-20:24:55.000,
+ord1,aa13,Rose,1,Fill,100,55,20231217-20:24:55.000,
+ord4,aa16,Rose,1,Fill,100,1,20231217-20:24:55.000,
+ord3,aa15,Rose,2,Fill,100,1,20231217-20:24:55.000,

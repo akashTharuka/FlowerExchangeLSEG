@@ -11,6 +11,6 @@ struct ExecutionReport
 	double price;
 	int quantity;
 	int status;
-	std::string reason;
 	std::string transaction_time;
+	std::string reason;
 };

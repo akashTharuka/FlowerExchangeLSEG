@@ -60,7 +60,7 @@ void ExchangeApplication::processOrdersCsvFile(std::string file_path)
 			std::cout << "Invalid order: " << reason << std::endl;
 			std::string order_id = order.getOrderId();
 			int exec_status = ExecutionStatus::Rejected;
-			std::string transaction_time = FlowerExchangeUtils::formatTransactionTime();
+			std::string transaction_time = FlowerExchangeUtils::getTransactionTime();
 			ExecutionReport exec_rep = {
 				client_order_id, order_id, instrument, side, price, quantity, exec_status, transaction_time, reason 
 			};

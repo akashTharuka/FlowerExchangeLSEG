@@ -4,7 +4,7 @@
 
 namespace FlowerExchangeUtils
 {
-	std::string formatTransactionTime();
+	std::string getTransactionTime();
 	void printVector(std::vector<std::string> v);
 }
 
