@@ -7,9 +7,8 @@ class ExchangeApplication
 {
 	public:
 		ExchangeApplication();
-		~ExchangeApplication();
+		~ExchangeApplication() {};
 
-		static std::string generateUniqueOrderId();
 		void processOrdersCsvFile(std::string file_path);
 		void writeToCsvFile(std::vector<ExecutionReport> execution_reports, std::string file_path);
 

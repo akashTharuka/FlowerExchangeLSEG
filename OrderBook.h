@@ -20,11 +20,11 @@ class OrderBook
 		*/
 		OrderBook() {};
 		OrderBook(const std::string& instrument);
-		~OrderBook();
+		~OrderBook() {};
 
 		// methods
-		void addBuyOrder(Order order, const std::string& order_id);
-		void addSellOrder(Order order, const std::string& order_id);
+		void addBuyOrder(Order order);
+		void addSellOrder(Order order);
 	private:
 		std::string instrument;
 		// buy orders are sorted in descending order

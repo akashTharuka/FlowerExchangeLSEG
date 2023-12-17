@@ -38,23 +38,23 @@ std::string Validator::validate(const std::string& client_order_id, const std::s
 {
 	if (!isValidClientOrderId(client_order_id))
 	{
-		return "Invalid client order id: " + client_order_id;
+		return "Invalid client order id";
 	}
 	if (!isValidInstrument(instrument))
 	{
-		return "Invalid instrument: " + instrument;
+		return "Invalid instrument";
 	}
 	if (!isValidSide(side))
 	{
-		return "Invalid side: " + std::to_string(side);
+		return "Invalid side";
 	}
 	if (!isValidPrice(price))
 	{
-		return "Invalid price: " + std::to_string(price);
+		return "Invalid price";
 	}
 	if (!isValidQuantity(quantity))
 	{
-		return "Invalid quantity: " + std::to_string(quantity);
+		return "Invalid quantity";
 	}
 	return "";
 }

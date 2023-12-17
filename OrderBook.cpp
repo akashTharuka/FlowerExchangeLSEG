@@ -8,11 +8,7 @@ OrderBook::OrderBook(const std::string& instrument)
 	this->instrument = instrument;
 }
 
-OrderBook::~OrderBook()
-{
-}
-
-void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
+void OrderBook::addBuyOrder(Order buy_order)
 {
 	ExecutionReport exec_rep;
 
@@ -21,17 +17,17 @@ void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
 	{
 		this->buy_orders[buy_order.getPrice()].push_back(buy_order);
 		// exec report for the buy order with status="NEW" with min_sell_price and min_sell_quantity
-		ExecutionReport exec_rep = ExecutionReport(
-			buy_order.getClientOrderId(), 
-			order_id, 
-			buy_order.getInstrument(), 
-			buy_order.getSide(), 
-			buy_order.getPrice(), 
+		exec_rep = {
+			buy_order.getClientOrderId(),
+			buy_order.getOrderId(),
+			buy_order.getInstrument(),
+			buy_order.getSide(),
+			buy_order.getPrice(),
 			buy_order.getQuantity(),
-			ExecutionStatus::New, 
-			"transaction_time", 
+			ExecutionStatus::New,
+			"transaction_time",
 			""
-		);
+		};
 		ExchangeApplication::addExecutionReport(exec_rep);
 		return;
 	}
@@ -46,31 +42,31 @@ void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
 			// update the buy order quantity
 			buy_order.setQuantity(buy_order.getQuantity() - curr_sell_order.getQuantity());
 			// exec report for the buy order with status="PFILL" with min_sell_price and min_sell_quantity
-			exec_rep = ExecutionReport(
-				buy_order.getClientOrderId(), 
-				order_id, 
-				buy_order.getInstrument(), 
-				buy_order.getSide(), 
+			exec_rep = {
+				buy_order.getClientOrderId(),
+				buy_order.getOrderId(),
+				buy_order.getInstrument(),
+				buy_order.getSide(),
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
-				ExecutionStatus::Pfill, 
-				"transaction_time", 
+				ExecutionStatus::Pfill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			this->sell_orders[curr_sell_order.getPrice()].erase(this->sell_orders[curr_sell_order.getPrice()].begin());
 			// exec report for the sell order with status="FILL" with min_sell_price and min_sell_quantity
-			exec_rep = ExecutionReport(
-				curr_sell_order.getClientOrderId(), 
-				order_id, 
+			exec_rep = {
+				curr_sell_order.getClientOrderId(),
+				curr_sell_order.getOrderId(),
 				curr_sell_order.getInstrument(),
 				curr_sell_order.getSide(),
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
-				ExecutionStatus::Fill, 
-				"transaction_time", 
+				ExecutionStatus::Fill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 
 			return;
@@ -79,32 +75,32 @@ void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
 		{
 			// since buy order is completed, no need to update the buy_orders
 			// exec report for the buy order with status="FILL" with min_sell_price and curr_buy_order.getQuantity()
-			exec_rep = ExecutionReport(
-				buy_order.getClientOrderId(), 
-				order_id, 
-				buy_order.getInstrument(), 
-				buy_order.getSide(), 
+			exec_rep = {
+				buy_order.getClientOrderId(),
+				buy_order.getOrderId(),
+				buy_order.getInstrument(),
+				buy_order.getSide(),
 				curr_sell_order.getPrice(),
-				buy_order.getQuantity(), 
-				ExecutionStatus::Fill, 
-				"transaction_time", 
+				buy_order.getQuantity(),
+				ExecutionStatus::Fill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			// update the sell order quantity
 			this->sell_orders[curr_sell_order.getPrice()][0].setQuantity(curr_sell_order.getQuantity() - buy_order.getQuantity());
 			// exec report for the sell order with status="PFILL" with min_sell_price and curr_buy_order.getQuantity()
-			exec_rep = ExecutionReport(
-				curr_sell_order.getClientOrderId(), 
-				order_id, 
+			exec_rep = {
+				curr_sell_order.getClientOrderId(),
+				curr_sell_order.getOrderId(),
 				curr_sell_order.getInstrument(),
 				curr_sell_order.getSide(),
 				curr_sell_order.getPrice(),
 				curr_sell_order.getQuantity(),
-				ExecutionStatus::Pfill, 
-				"transaction_time", 
+				ExecutionStatus::Pfill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			
 			return;
@@ -113,32 +109,32 @@ void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
 		{
 			// since buy order is completed, no need to update the buy_orders
 			// exec report for the buy order with status="FILL" with min_sell_price and curr_buy_order.getQuantity()
-			exec_rep = ExecutionReport(
-				buy_order.getClientOrderId(), 
-				order_id, 
-				buy_order.getInstrument(), 
-				buy_order.getSide(), 
+			exec_rep = {
+				buy_order.getClientOrderId(),
+				buy_order.getOrderId(),
+				buy_order.getInstrument(),
+				buy_order.getSide(),
 				curr_sell_order.getPrice(),
-				buy_order.getQuantity(), 
-				ExecutionStatus::Fill, 
-				"transaction_time", 
+				buy_order.getQuantity(),
+				ExecutionStatus::Fill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			// since sell order is also completed, remove the sell order from the sell_orders
 			this->sell_orders[curr_sell_order.getPrice()].erase(this->sell_orders[curr_sell_order.getPrice()].begin());
 			// exec report for the sell order with status="FILL" with min_sell_price and curr_buy_order.getQuantity()
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				curr_sell_order.getClientOrderId(),
-				order_id, 
+				curr_sell_order.getOrderId(),
 				curr_sell_order.getInstrument(),
 				curr_sell_order.getSide(),
 				curr_sell_order.getPrice(),
-				buy_order.getQuantity(), 
-				ExecutionStatus::Fill, 
-				"transaction_time", 
+				buy_order.getQuantity(),
+				ExecutionStatus::Fill,
+				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 
 			return;
@@ -161,7 +157,7 @@ void OrderBook::addBuyOrder(Order buy_order, const std::string& order_id)
 	this->buy_orders[buy_order.getPrice()].push_back(buy_order);
 }
 
-void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
+void OrderBook::addSellOrder(Order sell_order)
 {
 	ExecutionReport exec_rep;
 
@@ -171,9 +167,9 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 		this->sell_orders[sell_order.getPrice()].push_back(sell_order);
 		//std::cout << "sell orders size:" << sell_orders.size() << std::endl;
 		// exec report for the sell order with status="NEW" with min_buy_price and min_buy_quantity
-		ExecutionReport exec_rep = ExecutionReport(
+		exec_rep = {
 			sell_order.getClientOrderId(),
-			order_id,
+			sell_order.getOrderId(),
 			sell_order.getInstrument(),
 			sell_order.getSide(),
 			sell_order.getPrice(),
@@ -181,7 +177,7 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 			ExecutionStatus::New,
 			"transaction_time",
 			""
-		);
+		};
 		ExchangeApplication::addExecutionReport(exec_rep);
 		return;
 	}
@@ -196,9 +192,9 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 			// update the sell order quantity
 			sell_order.setQuantity(sell_order.getQuantity() - curr_buy_order.getQuantity());
 			// exec report for the sell order with status="PFILL" with min_buy_price and min_buy_quantity
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				sell_order.getClientOrderId(),
-				order_id,
+				sell_order.getOrderId(),
 				sell_order.getInstrument(),
 				sell_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -206,13 +202,13 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Pfill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			this->buy_orders[curr_buy_order.getPrice()].erase(this->buy_orders[curr_buy_order.getPrice()].begin());
 			// exec report for the buy order with status="FILL" with min_buy_price and min_buy_quantity
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				curr_buy_order.getClientOrderId(),
-				order_id,
+				curr_buy_order.getOrderId(),
 				curr_buy_order.getInstrument(),
 				curr_buy_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -220,16 +216,16 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Fill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 		}
 		else if (sell_order.getQuantity() < curr_buy_order.getQuantity())
 		{
 			// since sell order is completed, no need to update the sell_orders
 			// exec report for the sell order with status="FILL" with min_buy_price and sell_order.getQuantity()
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				sell_order.getClientOrderId(),
-				order_id,
+				sell_order.getOrderId(),
 				sell_order.getInstrument(),
 				sell_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -237,14 +233,14 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Fill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			// update the buy order quantity
 			this->buy_orders[curr_buy_order.getPrice()][0].setQuantity(curr_buy_order.getQuantity() - sell_order.getQuantity());
 			// exec report for the buy order with status="PFILL" with min_buy_price and sell_order.getQuantity()
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				curr_buy_order.getClientOrderId(),
-				order_id,
+				curr_buy_order.getOrderId(),
 				curr_buy_order.getInstrument(),
 				curr_buy_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -252,16 +248,16 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Pfill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 		}
 		else
 		{
 			// since sell order is completed, no need to update the sell_orders
 			// exec report for the sell order with status="FILL" with min_buy_price and sell_order.getQuantity()
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				sell_order.getClientOrderId(),
-				order_id,
+				sell_order.getOrderId(),
 				sell_order.getInstrument(),
 				sell_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -269,14 +265,14 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Fill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 			// since buy order is also completed, remove the buy order from the buy_orders
 			this->buy_orders[curr_buy_order.getPrice()].erase(this->buy_orders[curr_buy_order.getPrice()].begin());
 			// exec report for the buy order with status="FILL" with min_buy_price and sell_order.getQuantity()
-			exec_rep = ExecutionReport(
+			exec_rep = {
 				curr_buy_order.getClientOrderId(),
-				order_id,
+				curr_buy_order.getOrderId(),
 				curr_buy_order.getInstrument(),
 				curr_buy_order.getSide(),
 				curr_buy_order.getPrice(),
@@ -284,7 +280,7 @@ void OrderBook::addSellOrder(Order sell_order, const std::string& order_id)
 				ExecutionStatus::Fill,
 				"transaction_time",
 				""
-			);
+			};
 			ExchangeApplication::addExecutionReport(exec_rep);
 		}
 

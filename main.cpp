@@ -2,7 +2,7 @@
 
 int main()
 {
-	const std::string INPUT_PATH = "input/order.csv";
+	const std::string INPUT_PATH = "input/order1.csv";
 	const std::string OUTPUT_PATH = "output/execution_rep.csv";
 
 	ExchangeApplication app;
