@@ -21,9 +21,6 @@
     <ClCompile Include="ExchangeApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExecutionReport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OrderBook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

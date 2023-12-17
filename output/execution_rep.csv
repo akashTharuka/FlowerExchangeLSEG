@@ -1,6 +1,9 @@
 Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Transaction TIme,Reason
-ord1,aa13,,1,Rejected,100,55,Invalid instrument,1702822197
-ord2,aa14,Rose,3,Rejected,100,65,Invalid side,1702822197
-ord3,aa15,Lavender,2,Rejected,101,1,Invalid quantity,1702822197
-ord4,aa16,Tulip,1,Rejected,100,-1,Invalid price,1702822197
-ord5,aa17,Orchid,1,Rejected,1000,-1,Invalid price,1702822197
+ord1,aa13,Rose,1,New,100,55,,transaction_time
+ord2,aa14,Rose,1,New,100,65,,transaction_time
+ord3,aa15,Rose,2,PFill,100,65,,transaction_time
+ord2,aa14,Rose,1,Fill,100,65,,transaction_time
+ord3,aa15,Rose,2,PFill,100,55,,transaction_time
+ord1,aa13,Rose,1,Fill,100,55,,transaction_time
+ord4,aa16,Rose,1,Fill,100,1,,transaction_time
+ord3,aa15,Rose,2,Fill,100,1,,transaction_time
